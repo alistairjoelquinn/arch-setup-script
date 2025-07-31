@@ -34,24 +34,8 @@ log_step() {
     echo -e "${CYAN}────────────────────────────────────────${NC}"
 }
 
-# Setup wifi
-log_step "Setting up WiFi connection"
-log_info "Checking NetworkManager status..."
-systemctl status NetworkManager
-log_info "Scanning for available WiFi networks..."
-nmcli device wifi list 
-
-echo -e "\n${YELLOW}📶 WiFi Setup${NC}"
-read -p "Enter WiFi network name: " wifi_network
-read -s -p "Enter WiFi password: " wifi_password
-echo
-
-log_info "Connecting to WiFi network '$wifi_network'..."
-nmcli device wifi connect "$wifi_network" password "$wifi_password"
-log_success "WiFi connection established"
-
 log_step "Testing internet connection"
-log_info "Pinging Google to verify connectivity..."
+log_info "Verifying internet connectivity..."
 ping -c 3 google.com
 log_success "Internet connection verified"
 
@@ -101,7 +85,7 @@ log_success "All applications installed successfully"
 log_step "Preparing configuration directory"
 log_info "Creating .config directory..."
 mkdir -p ~/.config
-log_info "Removing existing config files from home directory..."
+log_info "Removing existing .tmux.conf..."
 rm -f ~/.tmux.conf
 log_success "Configuration directory prepared"
 
