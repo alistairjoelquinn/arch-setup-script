@@ -46,7 +46,7 @@ log_success "System packages updated"
 
 log_step "Setting up firewall"
 log_info "Installing UFW (Uncomplicated Firewall)..."
-sudo pacman -S --noconfirm ufw 
+sudo pacman -S --noconfirm --needed ufw 
 log_info "Enabling UFW service..."
 sudo systemctl enable --now ufw 
 log_info "Activating firewall..."
@@ -55,7 +55,7 @@ log_success "Firewall configured and activated"
 
 log_step "Installing base packages"
 log_info "Installing essential development tools..."
-sudo pacman -S --noconfirm git zsh tmux lua luarocks wl-clipboard
+sudo pacman -S --noconfirm --needed git zsh tmux lua luarocks wl-clipboard
 log_success "Base packages installed"
 
 log_step "Installing AUR helper (yay)"
@@ -70,7 +70,7 @@ log_success "AUR helper (yay) installed successfully"
 
 log_step "Installing Hyprland and desktop environment"
 log_info "Installing Hyprland compositor and essential components..."
-sudo pacman -S --noconfirm hyprland xdg-desktop-portal-hyprland qt5-wayland qt6-wayland polkit-kde-agent dunst grim slurp uwsm waybar thunar thunar-archive-plugin thunar-volman tumbler blueberry sddm
+sudo pacman -S --noconfirm --needed hyprland xdg-desktop-portal-hyprland qt5-wayland qt6-wayland polkit-kde-agent dunst grim slurp uwsm waybar thunar thunar-archive-plugin thunar-volman tumbler blueberry sddm
 log_info "Installing Wayland-compatible applications..."
 yay -S --noconfirm rofi-wayland
 log_info "Enabling SDDM display manager..."
@@ -144,3 +144,13 @@ log_info "Recreating symlinks with new config files..."
 ln -sf ~/.config/.zshrc ~/.zshrc
 ln -sf ~/.config/tmux.conf ~/.tmux.conf
 log_success "Dotfiles configuration applied successfully"
+
+echo -e "\n${YELLOW}🔄 RESTART REQUIRED:${NC}"
+echo -e "   ${WHITE}•${NC} SDDM display manager needs to be activated"
+echo -e "   ${WHITE}•${NC} Shell change to zsh needs to take effect"
+echo -e "   ${WHITE}•${NC} Hyprland will be available after restart"
+echo -e "\n${CYAN}After restart:${NC}"
+echo -e "   ${WHITE}•${NC} Log in through SDDM"
+echo -e "   ${WHITE}•${NC} Select Hyprland as your session"
+echo -e "   ${WHITE}•${NC} Configure waybar and other apps as needed"
+echo -e "\n${GREEN}✨ Setup complete! Please restart your system.${NC}"
