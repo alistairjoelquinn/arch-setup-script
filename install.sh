@@ -79,7 +79,7 @@ log_success "Hyprland desktop environment installed"
 
 log_step "Installing applications"
 log_info "Installing browsers, development tools, and productivity apps..."
-yay -S firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep
+yay -S firefox ghostty nodejs signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep
 log_success "All applications installed successfully"
 
 log_step "Preparing configuration directory"
@@ -155,4 +155,4 @@ echo -e "   ${WHITE}•${NC} Select Hyprland as your session"
 echo -e "   ${WHITE}•${NC} Configure waybar and other apps as needed"
 echo -e "\n${GREEN}✨ Setup complete! Please restart your system.${NC}"
 
-# todo: install claude-code and vpn
+# todo: install claude-code, vpn, spotify, 1password - failing due to build question
