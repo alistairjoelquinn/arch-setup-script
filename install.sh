@@ -39,7 +39,7 @@ if [ -z "$GITHUB_TOKEN" ]; then
     echo -e "\n${CYAN}🔑 GitHub Authentication Required:${NC}"
     echo -e "   ${WHITE}Get a token from:${NC} ${BLUE}https://github.com/settings/tokens${NC}"
     echo -e "   ${WHITE}Required scopes:${NC} ${YELLOW}write:public_key, read:user${NC}"
-    echo -e "\n${WHITE}Enter your GitHub token:${NC}"
+    echo -n "\n${WHITE}Enter your GitHub token:${NC}"
     read GITHUB_TOKEN
     export GITHUB_TOKEN
     echo -e "${GREEN}✅ Token set successfully${NC}"
