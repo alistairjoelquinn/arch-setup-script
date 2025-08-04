@@ -34,6 +34,17 @@ log_step() {
     echo -e "${CYAN}────────────────────────────────────────${NC}"
 }
 
+log_step "GitHub Token Setup"
+if [ -z "$GITHUB_TOKEN" ]; then
+    echo -e "\n${CYAN}🔑 GitHub Authentication Required:${NC}"
+    echo -e "   ${WHITE}Get a token from:${NC} ${BLUE}https://github.com/settings/tokens${NC}"
+    echo -e "   ${WHITE}Required scopes:${NC} ${YELLOW}write:public_key, read:user${NC}"
+    echo -e "\n${WHITE}Enter your GitHub token:${NC}"
+    read GITHUB_TOKEN
+    export GITHUB_TOKEN
+    echo -e "${GREEN}✅ Token set successfully${NC}"
+fi
+
 log_step "Testing internet connection"
 log_info "Verifying internet connectivity..."
 ping -c 3 google.com
@@ -68,18 +79,23 @@ log_info "Cleaning up build files..."
 cd .. && rm -rf yay
 log_success "AUR helper (yay) installed successfully"
 
+log_step "Installing GitHub CLI"
+log_info "Installing GitHub CLI..."
+yay -S --noconfirm github-cli
+log_success "GitHub CLI installed"
+
 log_step "Installing Hyprland and desktop environment"
 log_info "Installing Hyprland compositor and essential components..."
 sudo pacman -S --noconfirm --needed hyprland xdg-desktop-portal-hyprland qt5-wayland qt6-wayland polkit-kde-agent dunst grim slurp uwsm waybar thunar thunar-archive-plugin thunar-volman tumbler blueberry sddm
 log_info "Installing Wayland-compatible applications..."
-yay -S --noconfirm rofi-wayland
+yay -S --noconfirm --cleanafter --nodiffmenu rofi-wayland
 log_info "Enabling SDDM display manager..."
 sudo systemctl enable sddm
 log_success "Hyprland desktop environment installed"
 
 log_step "Installing applications"
 log_info "Installing browsers, development tools, and productivity apps..."
-yay -S --noconfirm --cleanafter --nodiffmenu firefox ghostty nodejs signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep
+yay -S --noconfirm --cleanafter --nodiffmenu --noeditmenu firefox ghostty nodejs 1password spotify claude-code signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep
 log_success "All applications installed successfully"
 
 log_step "Preparing configuration directory"
@@ -115,22 +131,16 @@ log_info "Starting SSH agent..."
 eval "$(ssh-agent -s)"
 log_info "Adding SSH key to agent..."
 ssh-add ~/.ssh/id_ed25519
-log_info "Copying public key to clipboard..."
-wl-copy < ~/.ssh/id_ed25519.pub
-log_success "SSH key generated and copied to clipboard!"
 
-echo -e "\n${CYAN}🔑 Your public key is now ready to add to GitHub:${NC}"
-echo -e "   ${WHITE}1.${NC} Go to ${BLUE}https://github.com/settings/keys${NC}"
-echo -e "   ${WHITE}2.${NC} Click ${GREEN}'New SSH key'${NC}"
-echo -e "   ${WHITE}3.${NC} Paste the key from clipboard ${YELLOW}(Ctrl+V)${NC}"
-echo -e "   ${WHITE}4.${NC} Give it a title and save"
+log_info "Authenticating with GitHub CLI..."
+echo $GITHUB_TOKEN | gh auth login --with-token
 
-echo -e "\n${YELLOW}⏸️  Please complete the GitHub SSH key setup above, then press ENTER to continue...${NC}"
-read -r
+log_info "Adding SSH key to GitHub automatically..."
+gh ssh-key add ~/.ssh/id_ed25519.pub --title "$(hostname)-$(date +%Y%m%d)"
 
 log_info "Testing SSH connection to GitHub..."
 ssh -T git@github.com || true
-log_success "SSH connection to GitHub verified! You can now clone repositories using SSH."
+log_success "SSH key added to GitHub and connection verified!"
 
 log_step "Setting up dotfiles configuration"
 log_info "Cloning dotfiles repository..."
@@ -154,5 +164,3 @@ echo -e "   ${WHITE}•${NC} Log in through SDDM"
 echo -e "   ${WHITE}•${NC} Select Hyprland as your session"
 echo -e "   ${WHITE}•${NC} Configure waybar and other apps as needed"
 echo -e "\n${GREEN}✨ Setup complete! Please restart your system.${NC}"
-
-# todo: install claude-code, vpn, spotify, 1password - failing due to build question
