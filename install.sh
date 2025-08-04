@@ -39,8 +39,13 @@ if [ -z "$GITHUB_TOKEN" ]; then
     echo -e "\n${CYAN}🔑 GitHub Authentication Required:${NC}"
     echo -e "   ${WHITE}Get a token from:${NC} ${BLUE}https://github.com/settings/tokens${NC}"
     echo -e "   ${WHITE}Required scopes:${NC} ${YELLOW}write:public_key, read:user${NC}"
-    echo -n "\n${WHITE}Enter your GitHub token:${NC}"
+    echo ""
+    echo -n "Enter your GitHub token: "
     read GITHUB_TOKEN
+    if [ -z "$GITHUB_TOKEN" ]; then
+        log_error "No token entered. Script cannot continue without GitHub token."
+        exit 1
+    fi
     export GITHUB_TOKEN
     echo -e "${GREEN}✅ Token set successfully${NC}"
 fi
