@@ -181,6 +181,15 @@ rm -rf dotfiles-temp
 log_info "Recreating symlinks with new config files..."
 ln -sf ~/.config/.zshrc ~/.zshrc
 ln -sf ~/.config/tmux.conf ~/.tmux.conf
+
+log_info "Updating Hyprland config to use ghostty..."
+if [ -f ~/.config/hypr/hyprland.conf ]; then
+    sed -i 's/kitty/ghostty/g' ~/.config/hypr/hyprland.conf
+    log_success "Hyprland config updated to use ghostty"
+else
+    log_warning "Hyprland config file not found"
+fi
+
 log_success "Dotfiles configuration applied successfully"
 
 echo -e "\n${YELLOW}🔄 RESTART REQUIRED:${NC}"
