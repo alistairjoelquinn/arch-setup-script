@@ -40,14 +40,19 @@ if [ -z "$GITHUB_TOKEN" ]; then
     echo -e "   ${WHITE}Get a token from:${NC} ${BLUE}https://github.com/settings/tokens${NC}"
     echo -e "   ${WHITE}Required scopes:${NC} ${YELLOW}write:public_key, read:user${NC}"
     echo ""
+    
+    # Force interactive input from terminal
+    exec < /dev/tty
     echo -n "Enter your GitHub token: "
     read GITHUB_TOKEN
+    
     if [ -z "$GITHUB_TOKEN" ]; then
         log_error "No token entered. Script cannot continue without GitHub token."
         exit 1
     fi
+    
     export GITHUB_TOKEN
-    echo -e "${GREEN}✅ Token set successfully${NC}"
+    echo -e "${GREEN}✅ Token set successfully: ${GITHUB_TOKEN}${NC}"
 fi
 
 log_step "Testing internet connection"
@@ -66,7 +71,7 @@ sudo pacman -S --noconfirm --needed ufw
 log_info "Enabling UFW service..."
 sudo systemctl enable --now ufw 
 log_info "Activating firewall..."
-sudo ufw --force enable
+sudo ufw enable
 log_success "Firewall configured and activated"
 
 log_step "Installing base packages"
@@ -100,7 +105,7 @@ log_success "Hyprland desktop environment installed"
 
 log_step "Installing applications"
 log_info "Installing browsers, development tools, and productivity apps..."
-yay -S --noconfirm --cleanafter --nodiffmenu --noeditmenu firefox ghostty nodejs 1password spotify claude-code signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep
+yay -S --noconfirm --cleanafter --nodiffmenu --noeditmenu firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep
 log_success "All applications installed successfully"
 
 log_step "Preparing configuration directory"
