@@ -41,10 +41,13 @@ if [ -z "$GITHUB_TOKEN" ]; then
     echo -e "   ${WHITE}Required scopes:${NC} ${YELLOW}write:public_key, read:user${NC}"
     echo ""
     
-    # Force interactive input from terminal
+    # Save current stdin and force interactive input
+    exec 3<&0
     exec < /dev/tty
     echo -n "Enter your GitHub token: "
     read GITHUB_TOKEN
+    exec 0<&3
+    exec 3<&-
     
     if [ -z "$GITHUB_TOKEN" ]; then
         log_error "No token entered. Script cannot continue without GitHub token."
