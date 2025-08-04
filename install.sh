@@ -79,7 +79,7 @@ log_success "Hyprland desktop environment installed"
 
 log_step "Installing applications"
 log_info "Installing browsers, development tools, and productivity apps..."
-yay -S firefox ghostty nodejs signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep
+yay -S --noconfirm --cleanafter --nodiffmenu firefox ghostty nodejs signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep
 log_success "All applications installed successfully"
 
 log_step "Preparing configuration directory"
