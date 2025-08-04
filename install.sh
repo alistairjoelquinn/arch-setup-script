@@ -74,7 +74,7 @@ log_success "Firewall configured and activated"
 
 log_step "Installing base packages"
 log_info "Installing essential development tools..."
-sudo pacman -S --noconfirm --needed git zsh tmux lua luarocks wl-clipboard
+sudo pacman -S --noconfirm --needed git zsh tmux lua luarocks wl-clipboard openssh inetutils
 log_success "Base packages installed"
 
 log_step "Installing AUR helper (yay)"
