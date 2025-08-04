@@ -85,7 +85,19 @@ log_info "Building and installing yay..."
 cd yay && makepkg -si --noconfirm
 log_info "Cleaning up build files..."
 cd .. && rm -rf yay
-log_success "AUR helper (yay) installed successfully"
+
+log_info "Refreshing shell environment..."
+hash -r
+source /etc/profile
+
+log_info "Testing yay installation..."
+if ! command -v yay &> /dev/null; then
+    log_error "yay installation failed - command not found"
+    exit 1
+fi
+
+yay_version=$(yay --version | head -n1)
+log_success "AUR helper (yay) installed successfully - $yay_version"
 
 log_step "Installing GitHub CLI"
 log_info "Installing GitHub CLI..."
