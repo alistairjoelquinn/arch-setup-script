@@ -115,7 +115,7 @@ log_success "Hyprland desktop environment installed"
 
 log_step "Installing applications"
 log_info "Installing browsers, development tools, and productivity apps..."
-if yay -S --noconfirm --cleanafter --nodiffmenu --noeditmenu firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep; then
+if yay -S --noconfirm --cleanafter firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep; then
     log_success "All applications installed successfully"
 else
     log_warning "Some applications may have failed to install. Checking individual packages..."
