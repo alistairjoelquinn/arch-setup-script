@@ -103,8 +103,28 @@ log_success "Hyprland desktop environment installed"
 
 log_step "Installing applications"
 log_info "Installing browsers, development tools, and productivity apps..."
-yay -S --noconfirm --cleanafter --nodiffmenu --noeditmenu firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep
-log_success "All applications installed successfully"
+if yay -S --noconfirm --cleanafter --nodiffmenu --noeditmenu firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep; then
+    log_success "All applications installed successfully"
+else
+    log_warning "Some applications may have failed to install. Checking individual packages..."
+    
+    # Check each package individually
+    failed_packages=""
+    for package in firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep; do
+        if pacman -Q "$package" &>/dev/null; then
+            log_success "$package - installed ✓"
+        else
+            log_error "$package - FAILED ✗"
+            failed_packages="$failed_packages $package"
+        fi
+    done
+    
+    if [ -n "$failed_packages" ]; then
+        log_warning "Failed packages:$failed_packages"
+        echo -e "\n${YELLOW}You can try installing failed packages manually later with:${NC}"
+        echo -e "${WHITE}yay -S$failed_packages${NC}"
+    fi
+fi
 
 log_step "Preparing configuration directory"
 log_info "Creating .config directory..."
