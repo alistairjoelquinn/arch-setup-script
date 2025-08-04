@@ -61,7 +61,7 @@ sudo pacman -S --noconfirm --needed ufw
 log_info "Enabling UFW service..."
 sudo systemctl enable --now ufw 
 log_info "Activating firewall..."
-sudo ufw enable
+sudo ufw --force enable
 log_success "Firewall configured and activated"
 
 log_step "Installing base packages"
