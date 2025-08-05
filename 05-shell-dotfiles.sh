@@ -26,11 +26,17 @@ log_step "Setting up dotfiles configuration"
 log_info "Cloning dotfiles repository..."
 cd ~
 git clone git@github.com:alistairjoelquinn/arch-dotfiles.git dotfiles-temp
-log_info "Copying dotfiles to ~/.config/..."
+log_info "Copying dotfiles to ~/.config/ (excluding zshrc)..."
 cp -r dotfiles-temp/* ~/.config/
+rm -f ~/.config/.zshrc
 log_info "Cleaning up temporary clone..."
 rm -rf dotfiles-temp
-log_info "Recreating symlinks with new config files..."
+
+log_info "Setting up Arch-specific zshrc..."
+SCRIPT_DIR="$(dirname "$0")"
+cp "$SCRIPT_DIR/zshrc" ~/.config/.zshrc
+
+log_info "Creating symlinks..."
 ln -sf ~/.config/.zshrc ~/.zshrc
 ln -sf ~/.config/tmux.conf ~/.tmux.conf
 
