@@ -36,6 +36,9 @@ log_info "Cloning arch-dotfiles repository..."
 git clone git@github.com:alistairjoelquinn/arch-dotfiles.git arch-dotfiles-temp
 log_info "Copying arch-specific configs (zshrc, hyprland, tmux)..."
 cp -r arch-dotfiles-temp/* ~/.config/
+sleep 2
+log_info "Force copying zshrc to ensure it overwrites Oh My Zsh config..."
+cp -f arch-dotfiles-temp/.zshrc ~/.config/.zshrc
 log_info "Cleaning up arch dotfiles clone..."
 rm -rf arch-dotfiles-temp
 
