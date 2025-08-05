@@ -25,27 +25,23 @@ log_success "Oh My Zsh installed successfully"
 log_step "Setting up dotfiles configuration"
 log_info "Cloning dotfiles repository..."
 cd ~
-git clone git@github.com:alistairjoelquinn/arch-dotfiles.git dotfiles-temp
-log_info "Copying dotfiles to ~/.config/ (excluding zshrc)..."
-cp -r dotfiles-temp/* ~/.config/
-rm -f ~/.config/.zshrc
+git clone git@github.com:alistairjoelquinn/dotfiles.git dotfiles-temp
+log_info "Copying nvim and ghostty configs..."
+cp -r dotfiles-temp/nvim ~/.config/ 2>/dev/null || log_warning "nvim config not found in dotfiles repo"
+cp -r dotfiles-temp/ghostty ~/.config/ 2>/dev/null || log_warning "ghostty config not found in dotfiles repo"
 log_info "Cleaning up temporary clone..."
 rm -rf dotfiles-temp
 
-log_info "Setting up Arch-specific zshrc..."
-SCRIPT_DIR="$(dirname "$0")"
-cp "$SCRIPT_DIR/zshrc" ~/.config/.zshrc
+log_info "Cloning arch-dotfiles repository..."
+git clone git@github.com:alistairjoelquinn/arch-dotfiles.git arch-dotfiles-temp
+log_info "Copying arch-specific configs (zshrc, hyprland, tmux)..."
+cp -r arch-dotfiles-temp/* ~/.config/
+log_info "Cleaning up arch dotfiles clone..."
+rm -rf arch-dotfiles-temp
 
 log_info "Creating symlinks..."
 ln -sf ~/.config/.zshrc ~/.zshrc
 ln -sf ~/.config/tmux.conf ~/.tmux.conf
 
-log_info "Updating Hyprland config to use ghostty..."
-if [ -f ~/.config/hypr/hyprland.conf ]; then
-    sed -i 's/kitty/ghostty/g' ~/.config/hypr/hyprland.conf
-    log_success "Hyprland config updated to use ghostty"
-else
-    log_warning "Hyprland config file not found"
-fi
 
 log_success "Dotfiles configuration applied successfully"
