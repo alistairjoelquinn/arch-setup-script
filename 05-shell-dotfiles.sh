@@ -26,16 +26,16 @@ log_step "Setting up dotfiles configuration"
 log_info "Cloning dotfiles repository..."
 cd ~
 git clone git@github.com:alistairjoelquinn/dotfiles.git dotfiles-temp
-log_info "Copying nvim and ghostty configs..."
+log_info "Copying nvim config..."
 cp -r dotfiles-temp/nvim ~/.config/ 2>/dev/null || log_warning "nvim config not found in dotfiles repo"
-cp -r dotfiles-temp/ghostty ~/.config/ 2>/dev/null || log_warning "ghostty config not found in dotfiles repo"
 log_info "Cleaning up temporary clone..."
 rm -rf dotfiles-temp
 
 log_info "Cloning arch-dotfiles repository..."
 git clone git@github.com:alistairjoelquinn/arch-dotfiles.git arch-dotfiles-temp
-log_info "Copying arch-specific configs (zshrc, hyprland, tmux)..."
+log_info "Copying arch-specific configs (zshrc, hyprland, tmux, ghostty, gitignore)..."
 cp -r arch-dotfiles-temp/* ~/.config/
+cp -f arch-dotfiles-temp/.gitignore ~/
 sleep 2
 log_info "Force copying zshrc to ensure it overwrites Oh My Zsh config..."
 cp -f arch-dotfiles-temp/.zshrc ~/.config/.zshrc
