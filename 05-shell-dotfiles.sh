@@ -42,6 +42,11 @@ cp -f arch-dotfiles-temp/.zshrc ~/.config/.zshrc
 log_info "Cleaning up arch dotfiles clone..."
 rm -rf arch-dotfiles-temp
 
+log_info "Setting up git repository for .config directory..."
+cd ~/.config
+git remote add origin git@github.com:alistairjoelquinn/arch-dotfiles.git
+git branch -M main
+
 log_info "Creating symlinks..."
 ln -sf ~/.config/.zshrc ~/.zshrc
 ln -sf ~/.config/tmux.conf ~/.tmux.conf
