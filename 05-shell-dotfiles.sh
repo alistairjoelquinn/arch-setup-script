@@ -48,6 +48,17 @@ git init
 git branch -m main
 git remote add origin git@github.com:alistairjoelquinn/arch-dotfiles.git
 
+# Create the fonts directory if it doesn't exist
+mkdir -p ~/.local/share/fonts/dank-mono
+
+# Copy all font files from your config directory
+cp ~/.config/files/DankMono/OpenType-PS/* ~/.local/share/fonts/dank-mono/
+cp ~/.config/files/DankMono/OpenType-TT/* ~/.local/share/fonts/dank-mono/
+cp ~/.config/files/DankMono/Web-PS/* ~/.local/share/fonts/dank-mono/
+
+# Refresh font cache
+fc-cache -fv
+
 log_info "Creating symlinks..."
 ln -sf ~/.config/.zshrc ~/.zshrc
 ln -sf ~/.config/tmux.conf ~/.tmux.conf
