@@ -45,6 +45,7 @@ rm -rf arch-dotfiles-temp
 log_info "Setting up git remote for .config directory..."
 cd ~/.config
 git init
+git branch -m main
 git remote add origin git@github.com:alistairjoelquinn/arch-dotfiles.git
 
 log_info "Creating symlinks..."
