@@ -35,12 +35,17 @@ rm -rf dotfiles-temp
 log_info "Cloning arch-dotfiles repository..."
 git clone git@github.com:alistairjoelquinn/arch-dotfiles.git arch-dotfiles-temp
 log_info "Copying arch-specific configs (zshrc, hyprland, tmux)..."
-cp -r arch-dotfiles-temp/* ~/.config/
+cp -r arch-dotfiles-temp/. ~/.config/
 sleep 2
 log_info "Force copying zshrc to ensure it overwrites Oh My Zsh config..."
 cp -f arch-dotfiles-temp/.zshrc ~/.config/.zshrc
 log_info "Cleaning up arch dotfiles clone..."
 rm -rf arch-dotfiles-temp
+
+log_info "Setting up git remote for .config directory..."
+cd ~/.config
+git init
+git remote add origin git@github.com:alistairjoelquinn/arch-dotfiles.git
 
 log_info "Creating symlinks..."
 ln -sf ~/.config/.zshrc ~/.zshrc
