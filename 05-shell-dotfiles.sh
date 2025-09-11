@@ -63,5 +63,22 @@ log_info "Creating symlinks..."
 ln -sf ~/.config/.zshrc ~/.zshrc
 ln -sf ~/.config/tmux.conf ~/.tmux.conf
 
+log_info "Setting up mimeapps.list for default image applications..."
+cat > ~/.config/mimeapps.list << 'EOF'
+[Default Applications]
+image/jpeg=imv.desktop
+image/jpg=imv.desktop
+image/png=imv.desktop
+image/gif=imv.desktop
+image/webp=imv.desktop
+image/bmp=imv.desktop
+image/tiff=imv.desktop
+image/svg+xml=imv.desktop
+
+[Added Associations]
+image/jpeg=imv.desktop
+image/png=imv.desktop
+image/gif=imv.desktop
+EOF
 
 log_success "Dotfiles configuration applied successfully"
