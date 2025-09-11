@@ -10,3 +10,6 @@ yay -S --noconfirm --cleanafter rofi-wayland hyprshot swaync
 log_info "Enabling SDDM display manager..."
 sudo systemctl enable sddm
 log_success "Hyprland desktop environment installed"
+log_info "Adding nerd font for waybar"
+sudo pacman -S ttf-font-awesome ttf-nerd-fonts-symbols-mono
+log_success "Added nerd fonts"
