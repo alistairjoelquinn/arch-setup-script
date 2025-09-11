@@ -4,13 +4,13 @@ source "$(dirname "$0")/utils.sh"
 
 log_step "Installing applications"
 log_info "Installing browsers, development tools, and productivity apps..."
-if yay -S --noconfirm --cleanafter firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep; then
+if yay -S --noconfirm --cleanafter firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep walker; then
     log_success "All applications installed successfully"
 else
     log_warning "Some applications may have failed to install. Checking individual packages..."
     
     failed_packages=""
-    for package in firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep; do
+    for package in firefox ghostty nodejs 1password spotify signal-desktop lazygit neovim obsidian libreoffice-fresh btop fzf ripgrep walker; do
         if pacman -Q "$package" &>/dev/null; then
             log_success "$package - installed ✓"
         else
