@@ -25,3 +25,11 @@ else
         echo -e "${WHITE}yay -S$failed_packages${NC}"
     fi
 fi
+
+log_step "Installing Claude Code"
+log_info "Installing Claude Code CLI via npm..."
+if npm install -g @anthropic/claude; then
+    log_success "Claude Code installed successfully"
+else
+    log_error "Failed to install Claude Code"
+fi

@@ -6,4 +6,7 @@ nmcli device wifi connect "YourNetworkName" password "YourPassword"
   
 curl -fsSL https://raw.githubusercontent.com/alistairjoelquinn/arch-setup-script/main/bootstrap.sh | bash
 
-github: read:user, repo, write:public_key
+notes:
+github - read:user, repo, write:public_key
+SETUP LANGUAGE SERVERS: do this like described in the neovim lsp folder
+install : go, rust, lua, lua rocks
