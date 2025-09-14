@@ -59,6 +59,9 @@ cp ~/.config/files/DankMono/Web-PS/* ~/.local/share/fonts/dank-mono/
 # Refresh font cache
 fc-cache -fv
 
+log_info "Adding npm global PATH to zshrc..."
+echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.config/.zshrc
+
 log_info "Creating symlinks..."
 ln -sf ~/.config/.zshrc ~/.zshrc
 ln -sf ~/.config/tmux.conf ~/.tmux.conf
