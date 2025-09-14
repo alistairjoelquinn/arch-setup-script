@@ -19,7 +19,6 @@ scripts=(
     "03-desktop-env.sh"
     "04-applications.sh"
     "05-shell-dotfiles.sh"
-    "06-lsp-servers.sh"
 )
 
 for script in "${scripts[@]}"; do
